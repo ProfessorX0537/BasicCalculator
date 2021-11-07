@@ -241,10 +241,10 @@ class MainWindow extends JFrame {
 
                     String op = (String) s1[1];
                     switch (op) {
-                        case "+" -> display.setText(operations.Add(Integer.parseInt((String) s1[0], 10), Integer.parseInt((String) s1[2], 10)));
-                        case "-" -> display.setText(operations.Subtract(Integer.parseInt((String) s1[0], 10), Integer.parseInt((String) s1[2], 10)));
-                        case "*" -> display.setText(operations.Multiply(Integer.parseInt((String) s1[0], 10), Integer.parseInt((String) s1[2], 10)));
-                        case "/" -> display.setText(operations.Divide(Integer.parseInt((String) s1[0], 10), Integer.parseInt((String) s1[2], 10)));
+                        case "+" -> display.setText(prevValue + " = " + operations.Add(Integer.parseInt((String) s1[0], 10), Integer.parseInt((String) s1[2], 10)));
+                        case "-" -> display.setText(prevValue + " = " + operations.Subtract(Integer.parseInt((String) s1[0], 10), Integer.parseInt((String) s1[2], 10)));
+                        case "*" -> display.setText(prevValue + " = " + operations.Multiply(Integer.parseInt((String) s1[0], 10), Integer.parseInt((String) s1[2], 10)));
+                        case "/" -> display.setText(prevValue + " = " + operations.Divide(Integer.parseInt((String) s1[0], 10), Integer.parseInt((String) s1[2], 10)));
                         default -> display.setText("No valid operation entered");
                     }
                 }
