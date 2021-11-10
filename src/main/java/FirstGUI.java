@@ -1,7 +1,11 @@
+import com.sun.tools.javac.Main;
+
+import javax.imageio.plugins.tiff.ExifGPSTagSet;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.http.WebSocket;
 import java.util.Arrays;
 /*
 Xavier Hines
@@ -14,10 +18,11 @@ if not num operator num program crashes fix later
 public class FirstGUI {
 
     public static void main(String[] args) {
-        MainWindow mainWindow = new MainWindow();
-        mainWindow.setVisible(true);
 
-    }
+
+        MainMenuFrame menuFrame = new MainMenuFrame();
+        menuFrame.setVisible(true);
+        }
 }
 
 class MainWindow extends JFrame {
@@ -278,3 +283,55 @@ class Operations {
     }
 }
 
+class MainMenuFrame extends MainWindow {
+    public MainMenuFrame() {
+        var menuBar = new JMenuBar();
+        setJMenuBar(menuBar);
+
+        var calculator = new JMenu("Calculator");
+        menuBar.add(calculator);
+
+        // creates extra window with calc on it
+        var startAction = new AbstractAction("Start") {
+            public void actionPerformed(ActionEvent event) {
+                MainWindow mainWindow = new MainWindow();
+                mainWindow.setVisible(true);
+                //System.exit(0);
+            }
+        };
+        JMenuItem startItem = calculator.add(startAction);
+
+        // will exit the whole program
+        var exitAction = new AbstractAction("Exit") {
+            public void actionPerformed(ActionEvent event) {
+                System.exit(0);
+            }
+        };
+        JMenuItem exitItem = calculator.add(exitAction);
+
+        var help = new JMenu("Help");
+        menuBar.add(help);
+        var helpAction = new AbstractAction("Help") {
+            public void actionPerformed(ActionEvent event) {
+                /** action listener opens another window with text describing how to use calc
+                 * examples for each op
+                 */
+                System.out.println("test"); //prints to console not window
+            }
+         };
+        JMenuItem helpItem = help.add(helpAction);
+
+
+        var about = new JMenu("About");
+        menuBar.add(about);
+        var aboutAction = new AbstractAction("About") {
+            public void actionPerformed(ActionEvent event) {
+                /**
+                 * info about author in another window or dialogue box
+                 */
+                System.out.println("test"); //prints to console not window
+            }
+        };
+        JMenuItem aboutItem = about.add(aboutAction);
+    }
+}
