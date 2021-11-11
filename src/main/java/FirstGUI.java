@@ -1,11 +1,7 @@
-import com.sun.tools.javac.Main;
-
-import javax.imageio.plugins.tiff.ExifGPSTagSet;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.net.http.WebSocket;
 import java.util.Arrays;
 /*
 Xavier Hines
@@ -18,10 +14,8 @@ if not num operator num program crashes fix later
 public class FirstGUI {
 
     public static void main(String[] args) {
-
-
-        MainMenuFrame menuFrame = new MainMenuFrame();
-        menuFrame.setVisible(true);
+        MainWindow mainWindow = new MainWindow();
+        mainWindow.setVisible(true);
         }
 }
 
@@ -33,15 +27,15 @@ class MainWindow extends JFrame {
         setSize(400,300);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-
-        JPanel mainPanel = new JPanel();
-        mainPanel.setBackground(Color.ORANGE);
-        add(mainPanel);
+        JPanel calcPanel = new JPanel();
+        calcPanel.setBackground(Color.ORANGE);
+        calcPanel.setVisible(false);
+        add(calcPanel);
 
         // Step 2
         JPanel displayPanel = new JPanel();
         displayPanel.setBackground(Color.BLACK);
-        mainPanel.add(displayPanel);
+        calcPanel.add(displayPanel);
 
         JTextField display = new JTextField(20);
         display.setEditable(false);
@@ -71,7 +65,7 @@ class MainWindow extends JFrame {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(4,4));
 //        buttonPanelOperators.setLayout(new GridLayout(1, 4));
-        mainPanel.add(buttonPanel);
+        calcPanel.add(buttonPanel);
 
         // Add button components
         //Row #1
@@ -98,6 +92,55 @@ class MainWindow extends JFrame {
         buttonPanel.add(buttonZero);
         buttonPanel.add(buttonEquals);
         buttonPanel.add(buttonDivided);
+
+        var menuBar = new JMenuBar();
+        setJMenuBar(menuBar);
+
+        var calculator = new JMenu("Calculator");
+        menuBar.add(calculator);
+
+        // creates extra window with calc on it
+        var startAction = new AbstractAction("Start") {
+            public void actionPerformed(ActionEvent event) {
+                calcPanel.setVisible(true);
+            }
+        };
+        JMenuItem startItem = calculator.add(startAction);
+
+        // will exit the whole program
+        var exitAction = new AbstractAction("Exit") {
+            public void actionPerformed(ActionEvent event) {
+                System.exit(0);
+            }
+        };
+        JMenuItem exitItem = calculator.add(exitAction);
+
+        var help = new JMenu("Help");
+        menuBar.add(help);
+        var helpAction = new AbstractAction("Help") {
+            public void actionPerformed(ActionEvent event) {
+                /** action listener opens another window with text describing how to use calc
+                 * examples for each op
+                 */
+                System.out.println("test"); //prints to console not window
+            }
+        };
+        JMenuItem helpItem = help.add(helpAction);
+
+
+        var about = new JMenu("About");
+        menuBar.add(about);
+        var aboutAction = new AbstractAction("About") {
+            public void actionPerformed(ActionEvent event) {
+                /**
+                 * info about author in another window or dialogue box
+                 */
+
+                System.out.println("test"); //prints to console not window
+            }
+        };
+        JMenuItem aboutItem = about.add(aboutAction);
+
 
         // implement action Listeners
         buttonZero.addActionListener(new ActionListener() {
@@ -256,7 +299,8 @@ class MainWindow extends JFrame {
             }
         );
 
-        //setVisible(true); generally found at end of GUI code
+
+        //this.setVisible(false); generally found at end of GUI code
         // however was set true in main
     }
 }
@@ -280,58 +324,5 @@ class Operations {
     public String Divide(int num1, int num2) {
         int solution = num1 / num2;
         return "" + solution;
-    }
-}
-
-class MainMenuFrame extends MainWindow {
-    public MainMenuFrame() {
-        var menuBar = new JMenuBar();
-        setJMenuBar(menuBar);
-
-        var calculator = new JMenu("Calculator");
-        menuBar.add(calculator);
-
-        // creates extra window with calc on it
-        var startAction = new AbstractAction("Start") {
-            public void actionPerformed(ActionEvent event) {
-                MainWindow mainWindow = new MainWindow();
-                mainWindow.setVisible(true);
-                //System.exit(0);
-            }
-        };
-        JMenuItem startItem = calculator.add(startAction);
-
-        // will exit the whole program
-        var exitAction = new AbstractAction("Exit") {
-            public void actionPerformed(ActionEvent event) {
-                System.exit(0);
-            }
-        };
-        JMenuItem exitItem = calculator.add(exitAction);
-
-        var help = new JMenu("Help");
-        menuBar.add(help);
-        var helpAction = new AbstractAction("Help") {
-            public void actionPerformed(ActionEvent event) {
-                /** action listener opens another window with text describing how to use calc
-                 * examples for each op
-                 */
-                System.out.println("test"); //prints to console not window
-            }
-         };
-        JMenuItem helpItem = help.add(helpAction);
-
-
-        var about = new JMenu("About");
-        menuBar.add(about);
-        var aboutAction = new AbstractAction("About") {
-            public void actionPerformed(ActionEvent event) {
-                /**
-                 * info about author in another window or dialogue box
-                 */
-                System.out.println("test"); //prints to console not window
-            }
-        };
-        JMenuItem aboutItem = about.add(aboutAction);
     }
 }
