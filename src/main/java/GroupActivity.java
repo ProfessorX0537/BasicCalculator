@@ -2,12 +2,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Arrays;
 
 public class GroupActivity {
     public static void main(String[] args) {
         MainWindow2 mainWindow = new MainWindow2();
         mainWindow.setVisible(true);
+
     }
 }
 class MainWindow2 extends JFrame {
@@ -16,7 +16,7 @@ class MainWindow2 extends JFrame {
         JFrame mainWindow = new JFrame();
         this.setTitle("Python Calculator");
         //TODO add an icon
-        setSize(500,200);
+        setSize(800,400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         JPanel calcPanel = new JPanel();
@@ -26,6 +26,7 @@ class MainWindow2 extends JFrame {
 
         // Step 2
         JPanel displayPanel = new JPanel();
+        calcPanel.add(displayPanel, BorderLayout.NORTH);
         displayPanel.setBackground(Color.BLACK);
         calcPanel.add(displayPanel);
 
@@ -70,12 +71,11 @@ class MainWindow2 extends JFrame {
 
         var help = new JMenu("Help");
         menuBar.add(help);
+
         var helpAction = new AbstractAction("Help") {
             public void actionPerformed(ActionEvent event) {
-                /** action listener opens another window with text describing how to use calc
-                 * examples for each op
-                 */
-                System.out.println("test"); //prints to console not window
+                 HelpWindow help = new HelpWindow();
+                 help.setVisible(true);
             }
         };
         JMenuItem helpItem = help.add(helpAction);
@@ -83,19 +83,25 @@ class MainWindow2 extends JFrame {
 
         var about = new JMenu("About");
         menuBar.add(about);
+
         var aboutAction = new AbstractAction("About") {
             public void actionPerformed(ActionEvent event) {
-                /**
-                 * info about author in another window or dialogue box
-                 */
+                var aboutText = new TextArea();
+                aboutText.setText("Author: Xavier Hines\nInfo: Junior in computer science major\n" +
+                        "Date: 11/13/21\nProgram: This is a simple calculator that performs basic math" +
+                        "\noperations with normal integers.");
+                aboutText.setEditable(false);
+                aboutText.setSize(350, 100);
 
-                System.out.println("test"); //prints to console not window
+                calcPanel.add(aboutText);
+                aboutText.setVisible(true);
             }
         };
         JMenuItem aboutItem = about.add(aboutAction);
 
         JPanel buttonPanel = new JPanel();
-        calcPanel.add(buttonPanel);
+        buttonPanel.setBackground(Color.BLACK);
+        displayPanel.add(buttonPanel);
 
         JButton buttonEquals = new JButton("=");
         buttonPanel.add(buttonEquals);
@@ -119,6 +125,18 @@ class MainWindow2 extends JFrame {
            }
         }
         );
+
+        JButton buttonClear = new JButton("C");
+        buttonPanel.add(buttonClear);
+
+        buttonClear.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                display1.setText("");
+                display2.setText("");
+                answerField.setText("");
+            }
+        });
     }
 }
 
@@ -142,4 +160,34 @@ class Operations2 {
         int solution = num1 / num2;
         return "" + solution;
     }
+}
+
+class HelpWindow extends JFrame {
+    public HelpWindow() {
+        JFrame help = new JFrame();
+        help.setTitle("Calculator Operation Help");
+        setSize(250,200);
+        setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+
+        JPanel helpPanel = new JPanel();
+        helpPanel.setBackground(Color.ORANGE);
+        add(helpPanel);
+        JTextArea textBox = new JTextArea();
+        textBox.setBackground(Color.ORANGE);
+        textBox.setEditable(false);
+        helpPanel.add(textBox);
+
+        textBox.setText("Operation Examples: \n\"+\" will perform simple addition" +
+                "\n\tExample: 5 + 5 = 10" +
+                "\n\"-\" will perform simple subtraction" +
+                "\n\tExample: 100 - 25 = 75" +
+                "\n\"*\" will perform simple Multiplication" +
+                "\n\tExample: 100 * 10 = 1000" +
+                "\n\"/\" will perform simple division" +
+                "\n\tExample: 81 / 9 = 9");
+        textBox.setVisible(true);
+        helpPanel.setVisible(true);
+    }
+
+
 }
