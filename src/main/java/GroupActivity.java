@@ -3,6 +3,13 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Author Xavier Hines
+ * Date: 11/13/21
+ * Group Members: Xavier Hines, Jasper Newkirk
+ * Program: Simple calculator with some GUI work
+ */
+
 public class GroupActivity {
     public static void main(String[] args) {
         MainWindow2 mainWindow = new MainWindow2();
